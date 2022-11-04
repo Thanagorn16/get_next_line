@@ -22,7 +22,7 @@ size_t ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin(char *str1, char *str2)
 {
 	int		i;
 	int		a;
@@ -47,5 +47,6 @@ char	*ft_strjoin(char const *str1, char const *str2)
 		a++;
 	}
 	ptr[i] = '\0';
+	free(str1);
 	return (ptr);
 }
