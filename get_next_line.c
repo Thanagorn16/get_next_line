@@ -22,7 +22,7 @@ char	*get_next_line(int fd)
 	static int	j;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	buff = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
@@ -41,12 +41,11 @@ char	*get_next_line(int fd)
 		{
 			free(buff);
 			free(temp);
+			temp = NULL;
 			return (NULL);
 		}
 		buff[rd] = '\0';
 		temp = ft_strjoin(temp, buff);
-		// printf("temp:%s\n", temp);
-		// printf("buff:%s\n", buff);
 	}
 	i = 0;
 	while (temp[j] != '\n' && temp[j] != '\0') //get a line from the file
@@ -54,14 +53,30 @@ char	*get_next_line(int fd)
 		j++;
 		i++;
 	}
-	if (temp[j] == '\0')
+	if (i == 0 && temp[j] == '\0')
+	{
+		free(buff);
 		free(temp);
-	// printf("here:%d\n", i);
-	j += 1;
-	str = (char *) malloc(sizeof(char) * i + 2);
-	str[i + 1] = '\0';
-	if (!str)
+		temp = NULL;
 		return (NULL);
+	}
+	if (temp[j] == '\n')
+		j += 1;
+	if (temp[j] == '\0' && temp[j - 1] != '\n')
+	{
+		str = (char *) malloc(sizeof(char) * i + 1);
+		if (!str)
+			return (NULL);
+		str[i] = '\0';
+		i--;
+	}
+	else
+	{
+		str = (char *) malloc(sizeof(char) * i + 2);
+		if (!str)
+			return (NULL);
+		str[i + 1] = '\0';
+	}
 	int e;
 	e = j - 1;
 	while (i >= 0)
@@ -76,26 +91,22 @@ char	*get_next_line(int fd)
 
 // int	main(void)
 // {
-// 	int	fd = open("mytest.txt", O_RDONLY);
-// 	// close(-1);
+// 	int	fd = open("/Users/truangsi/get_line/gnlTester/files/empty", O_RDONLY);
 // 	int	rd;
 // 	char	*c;
 
 // 	rd = 0;
-// 	c = (char *) malloc(100 * sizeof(char));
-// 	printf("fd :%d\n", fd);
-// 	close(fd);
-// 	printf("fd :%d", fd);
+// 	// c = (char *) malloc(100 * sizeof(char));
 // 	// if (fd == -1)
 // 	// 	printf("Error, cannot open\n");
-// 	c = get_next_line(fd);
+// 	c = get_next_line(1000);
 // 	printf("%s", c);
 // 	free(c);
-// 	// c = get_next_line(fd);
-// 	// // // printf("%s", c);
+// 	// c = get_next_line(-1);
+// 	// printf("%s", c);
 // 	// free(c);
 // 	// c = get_next_line(fd);
-// 	// // // printf("%s", c);
+// 	// printf("%s", c);
 // 	// free(c);
 // 	// close(fd);
 // 	return (0);
