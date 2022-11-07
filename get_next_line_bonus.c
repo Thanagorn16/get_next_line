@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line[fd].c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: truangsi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*create_temp(char *temp, int fd, int rd)
 {
@@ -70,30 +70,30 @@ char	*get_line(char *temp, int j, int *i, char *str)
 
 char	*get_next_line(int fd)
 {
-	static t_data	line;
+	static t_data	line[OPEN_MAX];
 	int				i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!line.temp)
-		line.temp = create_temp(NULL, fd, 1);
-	if (line.temp == NULL)
+	if (!line[fd].temp)
+		line[fd].temp = create_temp(NULL, fd, 1);
+	if (line[fd].temp == NULL)
 		return (NULL);
 	i = 0;
-	while (line.temp[line.j] != '\n' && line.temp[line.j] != '\0')
+	while (line[fd].temp[line[fd].j] != '\n' && line[fd].temp[line[fd].j] != '\0')
 	{
-		line.j++;
+		line[fd].j++;
 		i++;
 	}
-	if ((i == 0 && line.temp[line.j] == '\0') || line.temp[0] == '\0')
+	if ((i == 0 && line[fd].temp[line[fd].j] == '\0') || line[fd].temp[0] == '\0')
 	{
-		free(line.temp);
-		line.temp = NULL;
+		free(line[fd].temp);
+		line[fd].temp = NULL;
 		return (NULL);
 	}
-	if (line.temp[line.j] == '\n')
-		line.j += 1;
-	return (get_line(line.temp, line.j, &i, NULL));
+	if (line[fd].temp[line[fd].j] == '\n')
+		line[fd].j += 1;
+	return (get_line(line[fd].temp, line[fd].j, &i, NULL));
 }
 
 // int	main(int argc, char **argv)
