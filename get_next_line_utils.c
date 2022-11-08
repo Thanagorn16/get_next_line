@@ -12,9 +12,9 @@
 
 #include "get_next_line.h"
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -30,8 +30,6 @@ char	*ft_strjoin(char *str1, char *str2)
 
 	i = 0;
 	a = 0;
-	// if (!str1)
-	// 	return (NULL);
 	if (str2[0] == '\0')
 		return (str1);
 	ptr = (char *) malloc((ft_strlen(str1) + ft_strlen(str2) + 1));

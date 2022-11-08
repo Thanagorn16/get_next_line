@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: truangsi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 12:01:58 by truangsi          #+#    #+#             */
-/*   Updated: 2022/11/03 12:01:59 by truangsi         ###   ########.fr       */
+/*   Created: 2022/11/08 14:46:48 by truangsi          #+#    #+#             */
+/*   Updated: 2022/11/08 14:46:50 by truangsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-size_t ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -30,8 +30,6 @@ char	*ft_strjoin(char *str1, char *str2)
 
 	i = 0;
 	a = 0;
-	// if (!str1)
-	// 	return (NULL);
 	if (str2[0] == '\0')
 		return (str1);
 	ptr = (char *) malloc((ft_strlen(str1) + ft_strlen(str2) + 1));
