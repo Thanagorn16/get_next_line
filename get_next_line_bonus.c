@@ -15,14 +15,18 @@
 char	*create_temp(char *temp, int fd, int rd)
 {
 	char	*buff;
+	int	i;
 
 	buff = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
 		return (NULL);
-	temp = (char *) malloc(1);
 	if (!temp)
-		return (NULL);
-	temp[0] = '\0';
+	{
+		temp = (char *) malloc(1);
+		if (!temp)
+			return (NULL);
+		temp[0] = '\0';
+	}
 	while (rd != 0)
 	{
 		rd = read(fd, buff, BUFFER_SIZE);
@@ -34,6 +38,16 @@ char	*create_temp(char *temp, int fd, int rd)
 		}
 		buff[rd] = '\0';
 		temp = ft_strjoin(temp, buff);
+		i = 0;
+		while(buff[i] != '\0')
+		{
+			if (buff[i] == '\n')
+			{
+				free(buff);
+				return (temp);
+			}
+			i++;
+		}
 	}
 	free(buff);
 	return (temp);
@@ -73,8 +87,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!line[fd].temp)
-		line[fd].temp = create_temp(NULL, fd, 1);
+	line[fd].temp = create_temp(line[fd].temp, fd, 1);
 	if (line[fd].temp == NULL)
 		return (NULL);
 	i = 0;
