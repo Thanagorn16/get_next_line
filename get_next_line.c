@@ -12,10 +12,34 @@
 
 #include "get_next_line.h"
 
+char	*read_and_join(int rd, int fd, char *temp, char *buff)
+{
+	int	i;
+
+	i = 0;
+	while (rd != 0)
+	{
+		rd = read(fd, buff, BUFFER_SIZE);
+		if (rd == -1)
+		{
+			free(temp);
+			return (NULL);
+		}
+		buff[rd] = '\0';
+		temp = ft_strjoin(temp, buff);
+		while (buff[i] != '\0')
+		{
+			if (buff[i] == '\n')
+				return (temp);
+			i++;
+		}
+	}
+	return (temp);
+}
+
 char	*create_temp(char *temp, int fd, int rd)
 {
 	char	*buff;
-	int	i;
 
 	buff = (char *) malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
@@ -27,28 +51,7 @@ char	*create_temp(char *temp, int fd, int rd)
 			return (NULL);
 		temp[0] = '\0';
 	}
-	while (rd != 0)
-	{
-		rd = read(fd, buff, BUFFER_SIZE);
-		if (rd == -1)
-		{
-			free(buff);
-			free(temp);
-			return (NULL);
-		}
-		buff[rd] = '\0';
-		temp = ft_strjoin(temp, buff);
-		i = 0;
-		while(buff[i] != '\0')
-		{
-			if (buff[i] == '\n')
-			{
-				free(buff);
-				return (temp);
-			}
-			i++;
-		}
-	}
+	temp = read_and_join(rd, fd, temp, buff);
 	free(buff);
 	return (temp);
 }
@@ -116,6 +119,9 @@ char	*get_next_line(int fd)
 // 	if (fd == -1)
 // 		printf("error");
 
+// 	gt = get_next_line(fd);
+// 	printf("gnl:%s", gt);
+// 	free(gt);
 // 	gt = get_next_line(fd);
 // 	printf("gnl:%s", gt);
 // 	free(gt);
