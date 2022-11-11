@@ -111,24 +111,3 @@ char	*get_next_line(int fd)
 		line.j += 1;
 	return (get_line(line.temp, line.j, &i, NULL));
 }
-
-// int	main(void)
-// {
-// 	int	fd = open("mytest.txt", O_RDWR);
-// 	char	*gt;
-// 	if (fd == -1)
-// 		printf("error");
-
-// 	gt = get_next_line(fd);
-// 	printf("gnl:%s", gt);
-// 	free(gt);
-// 	gt = get_next_line(fd);
-// 	printf("gnl:%s", gt);
-// 	free(gt);
-// 	gt = get_next_line(fd);
-// 	printf("gnl:%s", gt);
-// 	free(gt);
-// 	gt = get_next_line(fd);
-// 	printf("gnl:%s", gt);
-// 	free(gt);
-// }
