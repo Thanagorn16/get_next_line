@@ -30,7 +30,6 @@ The primary objectives of this project are:
 
 - [Project Description](#project-description)
 - [How to Install and Run the Project](#how-to-install-and-run-the-project)
-- [How to Use the Project](#how-to-use-the-project)
 - [File Structure & Descriptions](#file-structure--descriptions)
 
 ---
